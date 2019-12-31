@@ -1,0 +1,20 @@
+{
+  "name": "study-book",
+  "version": "0.1.0",
+  "description": "Book for your study.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trvoid/study-book.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trvoid/study-book/issues"
+  },
+  "homepage": "https://github.com/trvoid/study-book#readme"
+}
