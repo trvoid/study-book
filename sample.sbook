@@ -1,0 +1,21 @@
+{
+    "title": "Electron Security",
+    "material": {
+        "type": "web",
+        "link": "https://electronjs.org/docs/tutorial/security"
+    },
+    "study": [
+        {
+            "type": "memo",
+            "created-when": "2020-01-01 14:01:00 +09",
+            "modified-when": "2020-01-01 14:01:00 +09",
+            "contents": "Memo-1"
+        },
+        {
+            "type": "memo",
+            "created-when": "2020-01-01 14:03:00 +09",
+            "modified-when": "2020-01-01 14:03:00 +09",
+            "contents": "Memo-2"
+        }
+    ]
+}
