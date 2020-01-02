@@ -5,18 +5,17 @@
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>
+        <link rel='stylesheet' href='css/main.css'>
     </head>
     <body>
-        <div class='w3-row'>
-            <div id='explorer-area' class='w3-container w3-quarter w3-grey'>
-                <input id='material-1' type='button' class='w3-button w3-black' value='Input Button'>
-            </div>
-            <div id='material-area' class='w3-container w3-half w3-light-grey'>
-                <webview id='view' src='http://www.google.com/' autosize='on' style='height:100%;'></webview>
-            </div>
-            <div id='study-area' class='w3-container w3-quarter w3-grey'>
-                <p id='memo'></p>
-            </div>
+        <div id='navigation-area' class='w3-container w3-card-2 w3-blue'>
+            <input id='material-1' type='button' class='w3-button w3-black' value='Input Button'>
+        </div>
+        <div id='material-area' class='w3-light-grey'>
+            <webview id='view' src='http://www.google.com/' autosize='on'></webview>
+        </div>
+        <div id='study-area' class='w3-container w3-card-2 w3-yellow'>
+            <p id='memo'>Memo here.</p>
         </div>
         <script>
             require('./renderer.js')
