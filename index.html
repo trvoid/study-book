@@ -5,17 +5,31 @@
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel='stylesheet' href='css/main.css'>
     </head>
     <body>
-        <div id='navigation-area' class='w3-container w3-card-2 w3-blue'>
-            <input id='material-1' type='button' class='w3-button w3-black' value='Input Button'>
+        <div id='navigation-area' class='w3-card w3-dark-grey'>
+            <div class='w3-bar w3-border-bottom'>
+                <a href='javascript:void(0);' id='material-1' class='w3-bar-item w3-button fa fa-home' title='M1' style='font-size:26px;margin-top:-2px'></a>
+                <a href='javascript:void(0);' id='material-2' class='w3-bar-item w3-button fa fa-bars' title='M2' style='font-size:26px;margin-top:-2px'></a>
+                <a href='javascript:void(0);' id='material-3' class='w3-bar-item w3-button fa fa-save' title='M3' style='font-size:26px;margin-top:-2px'></a>
+            </div>
         </div>
-        <div id='material-area' class='w3-light-grey'>
+        <div id='material-area' class='w3-grey'>
             <webview id='view' src='http://www.google.com/' autosize='on'></webview>
         </div>
-        <div id='study-area' class='w3-container w3-card-2 w3-yellow'>
-            <p id='memo'>Memo here.</p>
+        <div id='study-area' class='w3-card w3-dark-grey'>
+            <div class='w3-container w3-border-top w3-animate-bottom' style='position:absolute;top:0px;bottom:40px;width:100%;'>
+                <span id='memo'>Memo here.</span>
+            </div>
+            <div class='w3-bar w3-border-top w3-display-bottomleft' style='height:40px;'>
+                <a href='#' class='w3-bar-item w3-button' title='Memo'><i class='fa fa-edit'></i></a>
+                <a href='#' class='w3-bar-item w3-button' title='Comment'><i class='fa fa-comment'></i></a>
+                <a href='#' class='w3-bar-item w3-button' title='Highlight'><i class='fa fa-asterisk'></i></a>
+                <a href='#' class='w3-bar-item w3-button' title='Typing'><i class='fa fa-keyboard-o'></i></a>
+                <a href='#' class='w3-bar-item w3-button' title='Quiz'><i class='fa fa-trophy'></i></a>
+            </div>
         </div>
         <script>
             require('./renderer.js')
