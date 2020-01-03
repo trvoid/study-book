@@ -1,0 +1,51 @@
+{
+    "title": "W3.CSS Tutorial",
+    "material": {
+        "type": "web",
+        "link": "https://www.w3schools.com/w3css/default.asp"
+    },
+    "study": [
+        {
+            "type": "memo",
+            "created-when": "2020-01-01 14:01:00 +09",
+            "modified-when": "2020-01-01 14:01:00 +09",
+            "content": "Sample2 Memo-1"
+        },
+        {
+            "type": "memo",
+            "created-when": "2020-01-01 14:03:00 +09",
+            "modified-when": "2020-01-01 14:03:00 +09",
+            "content": "Sample2 Memo-2"
+        },
+        {
+            "type": "memo",
+            "created-when": "2020-01-01 14:03:00 +09",
+            "modified-when": "2020-01-01 14:03:00 +09",
+            "content": "Sample2 Memo-3"
+        },
+        {
+            "type": "memo",
+            "created-when": "2020-01-01 14:03:00 +09",
+            "modified-when": "2020-01-01 14:03:00 +09",
+            "content": "Sample2 Memo-4"
+        },
+        {
+            "type": "memo",
+            "created-when": "2020-01-01 14:03:00 +09",
+            "modified-when": "2020-01-01 14:03:00 +09",
+            "content": "Sample2 Memo-5"
+        },
+        {
+            "type": "memo",
+            "created-when": "2020-01-01 14:03:00 +09",
+            "modified-when": "2020-01-01 14:03:00 +09",
+            "content": "Sample2 Memo-6"
+        },
+        {
+            "type": "memo",
+            "created-when": "2020-01-01 14:03:00 +09",
+            "modified-when": "2020-01-01 14:03:00 +09",
+            "content": "Sample2 Memo-7"
+        }
+    ]
+}

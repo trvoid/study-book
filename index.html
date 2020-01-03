@@ -13,15 +13,14 @@
             <div class='w3-bar w3-border-bottom'>
                 <a href='javascript:void(0);' id='material-1' class='w3-bar-item w3-button fa fa-home' title='M1' style='font-size:26px;margin-top:-2px'></a>
                 <a href='javascript:void(0);' id='material-2' class='w3-bar-item w3-button fa fa-bars' title='M2' style='font-size:26px;margin-top:-2px'></a>
-                <a href='javascript:void(0);' id='material-3' class='w3-bar-item w3-button fa fa-save' title='M3' style='font-size:26px;margin-top:-2px'></a>
+                <a href='javascript:void(0);' id='file-open' class='w3-bar-item w3-button fa fa-folder-open' title='Open a study book' style='font-size:26px;margin-top:-2px'></a>
             </div>
         </div>
         <div id='material-area' class='w3-grey'>
             <webview id='view' src='http://www.google.com/' autosize='on'></webview>
         </div>
         <div id='study-area' class='w3-card w3-dark-grey'>
-            <div class='w3-container w3-border-top w3-animate-bottom' style='position:absolute;top:0px;bottom:40px;width:100%;'>
-                <span id='memo'>Memo here.</span>
+            <div id='study-content' class='w3-container w3-border-top w3-animate-bottom' style='position:absolute;top:0px;bottom:40px;width:100%;overflow:auto;'>
             </div>
             <div class='w3-bar w3-border-top w3-display-bottomleft' style='height:40px;'>
                 <a href='#' class='w3-bar-item w3-button' title='Memo'><i class='fa fa-edit'></i></a>
