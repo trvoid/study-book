@@ -11,8 +11,8 @@ var path = require('path');
 var studyBook = path.join(__dirname, 'sample.sbook');
 
 var materialArea = ById('material-area'),
-    material = ById('material-1'),
-    fileOpenButton = ById('file-open'),
+    navMenu = ById('nav-menu'),
+    navOpen = ById('nav-open'),
     view = ById('view'),
     studyArea = ById('study-area'),
     studyContent = ById('study-content');
@@ -48,14 +48,13 @@ function openStudyBook(event) {
         let link = obj.material.link;
         let study = obj.study;
         view.loadURL(link);
-        for (s of study) {
+        if (study.memo !== undefined) {
             var node = document.createElement('p');
-            var text = document.createTextNode(s.content);
+            var text = document.createTextNode(study.memo.content);
             node.appendChild(text);
             studyContent.appendChild(node);
         }
     });
 }
 
-material.addEventListener('click', openStudyBook);
-fileOpenButton.addEventListener('click', openStudyBook);
+navOpen.addEventListener('click', openStudyBook);
