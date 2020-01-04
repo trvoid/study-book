@@ -1,72 +1,108 @@
+////////////////////////////////////////////////////////////////////////////////
+// Modules                                                                    //
+////////////////////////////////////////////////////////////////////////////////
+const {remote} = require('electron');
+const jsonfile = require('jsonfile');
+const path = require('path');
+
+////////////////////////////////////////////////////////////////////////////////
+// Constants                                                                  //
+////////////////////////////////////////////////////////////////////////////////
+const SNOTE_FILE_EXTENSION = '.snote';
+
+////////////////////////////////////////////////////////////////////////////////
+// Utilities                                                                  //
+////////////////////////////////////////////////////////////////////////////////
 var ById = function(id) {
     return document.getElementById(id);
 }
 
-const {remote} = require('electron');
+////////////////////////////////////////////////////////////////////////////////
+// Variables                                                                  //
+////////////////////////////////////////////////////////////////////////////////
 const dialog = remote.dialog;
 const mainWindow = remote.getCurrentWindow();
 
-var jsonfile = require('jsonfile');
-var path = require('path');
-
-var materialArea = ById('material-area'),
+const materialArea = ById('material-area'),
     navMenu = ById('nav-menu'),
     navOpen = ById('nav-open'),
     view = ById('view'),
     studyArea = ById('study-area'),
-    studyContent = ById('study-content'),
-    studyText = ById('study-text'),
-    studyMde = new SimpleMDE({element: studyText});
+    studyNote = ById('study-note'),
+    studyMemo = ById('study-memo'),
+    studyMde = new SimpleMDE({element: studyMemo});
 
-let studyBookFilePath;
-let studyBookObj;
+let studyNoteFilePath;
+let studyNoteObj;
+let studyNoteSaveTimer;
 
-function openStudyBook(event) {
+////////////////////////////////////////////////////////////////////////////////
+// Functions                                                                  //
+////////////////////////////////////////////////////////////////////////////////
+function openStudyNote(event) {
     let options = {
-        title : 'Open file',
+        title : 'Open a study note',
         defaultPath : '.',
         buttonLabel : 'Open',
         filters : [
-            {name: 'Study books', extensions: ['sbook']}
+            {name: 'Study notes', extensions: ['snote']}
         ],
         properties: ['openFile']
     };
 
-    var filePaths = dialog.showOpenDialogSync(mainWindow, options);
+    let filePaths = dialog.showOpenDialogSync(mainWindow, options);
 
     if (filePaths === undefined) {
         return;
     }
 
-    //while (studyContent.lastChild) {
-    //    studyContent.removeChild(studyContent.lastChild);
-    //}
+    studyArea.style.display = 'none';
+
+    if (studyNoteSaveTimer !== undefined) {
+        clearTimeout(studyNoteSaveTimer);
+        studyNoteSaveTimer = undefined;
+        saveStudyNote();
+    }
+    studyMde.codemirror.on('change', function() {});
     studyMde.value('');
 
-    studyBookFilePath = filePaths[0];
-    jsonfile.readFile(studyBookFilePath, function(err, obj) {
+    studyNoteFilePath = filePaths[0];
+    jsonfile.readFile(studyNoteFilePath, function(err, obj) {
         if (err) {
             console.error(err);
             return;
         }
 
-        studyBookObj = obj;
+        studyNoteObj = obj;
         let title = obj.title;
         let link = obj.material.link;
         let study = obj.study;
         view.loadURL(link);
         if (study.memo !== undefined) {
             studyMde.value(study.memo.content);
+
+            studyMde.codemirror.on("change", function() {
+                if (studyNoteSaveTimer !== undefined) {
+                    clearTimeout(studyNoteSaveTimer);
+                }
+            	studyNoteSaveTimer = setTimeout(saveStudyNote, 5000);
+            });
         }
+    });
+
+    studyArea.style.display = 'block';
+}
+
+function saveStudyNote() {
+    studyNoteObj.study.memo.content = studyMde.value();
+    jsonfile.writeFile(studyNoteFilePath, studyNoteObj, function(err) {
+        if (err) console.error(err);
     });
 }
 
-navOpen.addEventListener('click', openStudyBook);
+////////////////////////////////////////////////////////////////////////////////
+// Main                                                                       //
+////////////////////////////////////////////////////////////////////////////////
+navOpen.addEventListener('click', openStudyNote);
 
-studyMde.codemirror.on("change", function() {
-	console.log(studyMde.value());
-    studyBookObj.study.memo.content = studyMde.value();
-    jsonfile.writeFile(studyBookFilePath, studyBookObj, function(err) {
-        if (err) console.error(err);
-    });
-});
+studyArea.style.display = 'none';
