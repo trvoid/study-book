@@ -18,6 +18,9 @@ var materialArea = ById('material-area'),
     studyText = ById('study-text'),
     studyMde = new SimpleMDE({element: studyText});
 
+let studyBookFilePath;
+let studyBookObj;
+
 function openStudyBook(event) {
     let options = {
         title : 'Open file',
@@ -40,12 +43,14 @@ function openStudyBook(event) {
     //}
     studyMde.value('');
 
-    jsonfile.readFile(filePaths[0], function(err, obj) {
+    studyBookFilePath = filePaths[0];
+    jsonfile.readFile(studyBookFilePath, function(err, obj) {
         if (err) {
             console.error(err);
             return;
         }
 
+        studyBookObj = obj;
         let title = obj.title;
         let link = obj.material.link;
         let study = obj.study;
@@ -57,3 +62,11 @@ function openStudyBook(event) {
 }
 
 navOpen.addEventListener('click', openStudyBook);
+
+studyMde.codemirror.on("change", function() {
+	console.log(studyMde.value());
+    studyBookObj.study.memo.content = studyMde.value();
+    jsonfile.writeFile(studyBookFilePath, studyBookObj, function(err) {
+        if (err) console.error(err);
+    });
+});
