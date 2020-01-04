@@ -8,14 +8,15 @@ const mainWindow = remote.getCurrentWindow();
 
 var jsonfile = require('jsonfile');
 var path = require('path');
-var studyBook = path.join(__dirname, 'sample.sbook');
 
 var materialArea = ById('material-area'),
     navMenu = ById('nav-menu'),
     navOpen = ById('nav-open'),
     view = ById('view'),
     studyArea = ById('study-area'),
-    studyContent = ById('study-content');
+    studyContent = ById('study-content'),
+    studyText = ById('study-text'),
+    studyMde = new SimpleMDE({element: studyText});
 
 function openStudyBook(event) {
     let options = {
@@ -34,9 +35,10 @@ function openStudyBook(event) {
         return;
     }
 
-    while (studyContent.lastChild) {
-        studyContent.removeChild(studyContent.lastChild);
-    }
+    //while (studyContent.lastChild) {
+    //    studyContent.removeChild(studyContent.lastChild);
+    //}
+    studyMde.value('');
 
     jsonfile.readFile(filePaths[0], function(err, obj) {
         if (err) {
@@ -49,10 +51,7 @@ function openStudyBook(event) {
         let study = obj.study;
         view.loadURL(link);
         if (study.memo !== undefined) {
-            var node = document.createElement('p');
-            var text = document.createTextNode(study.memo.content);
-            node.appendChild(text);
-            studyContent.appendChild(node);
+            studyMde.value(study.memo.content);
         }
     });
 }
