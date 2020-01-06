@@ -1,1 +1,19 @@
-{"title":"Electron Security","material":{"type":"web","link":"https://electronjs.org/docs/tutorial/security"},"study":{"memo":{"created-when":"2020-01-01 14:01:00 +09","modified-when":"2020-01-01 14:01:00 +09","content":"Sample1 Memo Electron Security"},"comment":{"created-when":"2020-01-01 14:03:00 +09","modified-when":"2020-01-01 14:03:00 +09","content":"Sample1 Comment"}}}
+{
+  "title": "Electron Security",
+  "material": {
+    "type": "web",
+    "link": "https://electronjs.org/docs/tutorial/security"
+  },
+  "study": {
+    "memo": {
+      "created-when": "2020-01-01 14:01:00 +09",
+      "modified-when": "2020-01-01 14:01:00 +09",
+      "content": "Sample1 Memo - Electron Security"
+    },
+    "comment": {
+      "created-when": "2020-01-01 14:03:00 +09",
+      "modified-when": "2020-01-01 14:03:00 +09",
+      "content": "Sample1 Comment"
+    }
+  }
+}

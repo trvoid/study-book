@@ -95,7 +95,8 @@ function openStudyNote(event) {
 
 function saveStudyNote() {
     studyNoteObj.study.memo.content = studyMde.value();
-    jsonfile.writeFile(studyNoteFilePath, studyNoteObj, function(err) {
+    let options = {spaces:2, EOL:'\r\n'};
+    jsonfile.writeFile(studyNoteFilePath, studyNoteObj, options, function(err) {
         if (err) console.error(err);
     });
 }
