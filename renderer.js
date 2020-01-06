@@ -30,6 +30,7 @@ const materialArea = ById('material-area'),
     studyArea = ById('study-area'),
     studyNote = ById('study-note'),
     studyMemo = ById('study-memo'),
+    switchMemo = ById('switch-memo'),
     studyMde = new SimpleMDE({element: studyMemo});
 
 let studyNoteFilePath;
@@ -105,5 +106,12 @@ function saveStudyNote() {
 // Main                                                                       //
 ////////////////////////////////////////////////////////////////////////////////
 navOpen.addEventListener('click', openStudyNote);
+switchMemo.addEventListener('click', function() {
+    if (studyArea.style.display === 'none') {
+        studyArea.style.display = 'block';
+    } else {
+        studyArea.style.display = 'none';
+    }
+});
 
 studyArea.style.display = 'none';
