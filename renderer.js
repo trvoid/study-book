@@ -31,6 +31,7 @@ const materialArea = ById('material-area'),
     studyNote = ById('study-note'),
     studyMemo = ById('study-memo'),
     switchMemo = ById('switch-memo'),
+    switchHighlight = ById('switch-highlight'),
     studyMde = new SimpleMDE({element: studyMemo});
 
 let studyNoteFilePath;
@@ -105,13 +106,27 @@ function saveStudyNote() {
 ////////////////////////////////////////////////////////////////////////////////
 // Main                                                                       //
 ////////////////////////////////////////////////////////////////////////////////
+view.addEventListener('ipc-message', function(event) {
+    console.log(event);
+    console.info(event.channel);
+});
+
 navOpen.addEventListener('click', openStudyNote);
+
 switchMemo.addEventListener('click', function() {
     if (studyArea.style.display === 'none') {
         studyArea.style.display = 'block';
     } else {
         studyArea.style.display = 'none';
     }
+});
+
+switchHighlight.addEventListener('click', function() {
+    //view.send('request');
+    view.send('highlight-on', {
+        id: 'myelementID',
+        text: 'My text'
+    });
 });
 
 studyArea.style.display = 'none';
