@@ -23,8 +23,11 @@
         <div id='material-area' class='w3-grey'>
             <webview id='view' src='http://www.google.com/' preload='injector.js' autosize='on'></webview>
         </div>
-        <div id='study-area' class='w3-border-top w3-light-grey'>
-            <textarea id='study-memo' style='width:100%;height:100px;overflow:auto;'></textarea>
+        <div id='study-area' class='w3-border w3-light-grey'>
+            <div id="study-area-header">Click here to move</div>
+            <div id='study-area-body'>
+                <textarea id='study-memo' style='width:100%;height:100%;'></textarea>
+            </div>
         </div>
         <div id='switch-area' class='w3-card w3-animate-bottom w3-dark-grey'>
             <div class='w3-bar w3-border-top' style='height:100%;'>

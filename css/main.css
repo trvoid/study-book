@@ -19,10 +19,26 @@
 }
 
 #study-area {
-    position:fixed;
-    bottom:0px;
+    position:absolute;
+    bottom:50px;
+    right:50px;
+    width:500px;
+    height:400px;
+    opacity:0.95;
+}
+
+#study-area-header {
+    height:42px;
+    padding:10px;
+    cursor:move;
+    z-index:10;
+    background-color:#2196F3;
+    color:#fff;
+}
+
+#study-area-body {
     width:100%;
-    opacity:0.9;
+    height:356px;
     overflow:auto;
 }
 
