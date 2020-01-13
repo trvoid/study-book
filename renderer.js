@@ -144,6 +144,10 @@ function dragElement(elem) {
 ////////////////////////////////////////////////////////////////////////////////
 // Main                                                                       //
 ////////////////////////////////////////////////////////////////////////////////
+view.addEventListener('dom-ready', () => {
+    view.openDevTools();
+});
+
 view.addEventListener('ipc-message', function(event) {
     console.log(event);
     console.info(event.channel);
