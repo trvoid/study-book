@@ -13,18 +13,15 @@
         <link rel='stylesheet' href='css/main.css'>
     </head>
     <body>
-        <div id='navigation-area' class='w3-card w3-animate-top w3-dark-grey'>
-            <div class='w3-bar w3-border-bottom' style='height:100%;'>
-                <a href='javascript:void(0);' id='nav-home' class='w3-bar-item w3-button fa fa-home' title='Home' style='font-size:19px;margin-top:2px'></a>
-                <a href='javascript:void(0);' id='nav-menu' class='w3-bar-item w3-button fa fa-bars' title='Menu' style='font-size:19px;margin-top:2px'></a>
-                <a href='javascript:void(0);' id='nav-open' class='w3-bar-item w3-button fa fa-folder-open' title='Open a study book' style='font-size:19px;margin-top:2px'></a>
-            </div>
-        </div>
         <div id='material-area' class='w3-grey'>
             <webview id='view' src='http://www.google.com/' preload='injector.js' autosize='on'></webview>
         </div>
         <div id='study-area' class='w3-border w3-light-grey'>
-            <div id='study-area-header'>Click here to move</div>
+            <div id='study-area-header'>
+                <div class='w3-bar' style='height:100%;'>
+                    <a href='javascript:void(0);' id='nav-open' class='w3-bar-item w3-button fa fa-folder-open' title='Open a study book' style='font-size:19px;margin-top:2px'></a>
+                </div>
+            </div>
             <div id='study-area-body'>
                 <textarea id='study-memo' style='width:100%;height:100%;'></textarea>
             </div>

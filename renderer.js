@@ -28,6 +28,8 @@ const materialArea = ById('material-area'),
     navOpen = ById('nav-open'),
     view = ById('view'),
     studyArea = ById('study-area'),
+    studyAreaBody = ById('study-area-body'),
+    studyAreaFooter = ById('study-area-footer'),
     studyNote = ById('study-note'),
     studyMemo = ById('study-memo'),
     switchMemo = ById('switch-memo'),
@@ -58,7 +60,8 @@ function openStudyNote(event) {
         return;
     }
 
-    studyArea.style.display = 'none';
+    studyAreaBody.style.display = 'none';
+    studyAreaFooter.style.display = 'none';
 
     if (studyNoteSaveTimer !== undefined) {
         clearTimeout(studyNoteSaveTimer);
@@ -92,7 +95,8 @@ function openStudyNote(event) {
         }
     });
 
-    studyArea.style.display = 'block';
+    studyAreaBody.style.display = 'block';
+    studyAreaFooter.style.display = 'block';
 }
 
 function saveStudyNote() {
@@ -156,10 +160,10 @@ view.addEventListener('ipc-message', function(event) {
 navOpen.addEventListener('click', openStudyNote);
 
 switchMemo.addEventListener('click', function() {
-    if (studyArea.style.display === 'none') {
-        studyArea.style.display = 'block';
+    if (studyAreaBody.style.display === 'none') {
+        studyAreaBody.style.display = 'block';
     } else {
-        studyArea.style.display = 'none';
+        studyAreaBody.style.display = 'none';
     }
 });
 
@@ -167,10 +171,15 @@ switchHighlight.addEventListener('click', function() {
     //view.send('request');
     view.send('highlight-on', {
         id: 'myelementID',
-        text: 'My text'
+        text: 'browser',
+        startContainerPath: 'p[3]',
+        startOffset: 3,
+        endContainerPath: 'p[3]',
+        endOffset: 6
     });
 });
 
-studyArea.style.display = 'none';
+studyAreaBody.style.display = 'none';
+studyAreaFooter.style.display = 'none';
 
 dragElement(document.getElementById('study-area'));

@@ -1,15 +1,3 @@
-#navigation-area {
-    position:fixed;
-    top:0px;
-    width:100%;
-    height:10px;
-    opacity:0.9;
-}
-
-#navigation-area:hover {
-    height:40px;
-}
-
 #material-area {
     position:fixed;
     top:0px;
@@ -29,7 +17,7 @@
 
 #study-area-header {
     height:42px;
-    padding:10px;
+    padding:1px;
     cursor:move;
     z-index:10;
     background-color:#2196F3;
