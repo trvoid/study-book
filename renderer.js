@@ -24,16 +24,18 @@ const dialog = remote.dialog;
 const mainWindow = remote.getCurrentWindow();
 
 const materialArea = ById('material-area'),
-    navMenu = ById('nav-menu'),
-    navOpen = ById('nav-open'),
+    navNewNote = ById('nav-new-note'),
+    navOpenNote = ById('nav-open-note'),
     view = ById('view'),
     studyArea = ById('study-area'),
     studyAreaBody = ById('study-area-body'),
     studyAreaFooter = ById('study-area-footer'),
-    studyNote = ById('study-note'),
+    studyMemoPanel = ById('study-memo-panel'),
+    studyPropertiesPanel = ById('study-properties-panel'),
     studyMemo = ById('study-memo'),
     switchMemo = ById('switch-memo'),
     switchHighlight = ById('switch-highlight'),
+    switchProperties = ById('switch-properties'),
     studyMde = new SimpleMDE({element: studyMemo});
 
 let studyNoteFilePath;
@@ -43,6 +45,10 @@ let studyNoteSaveTimer;
 ////////////////////////////////////////////////////////////////////////////////
 // Functions                                                                  //
 ////////////////////////////////////////////////////////////////////////////////
+function createStudyNote(event) {
+
+}
+
 function openStudyNote(event) {
     let options = {
         title : 'Open a study note',
@@ -157,14 +163,12 @@ view.addEventListener('ipc-message', function(event) {
     console.info(event.channel);
 });
 
-navOpen.addEventListener('click', openStudyNote);
+navNewNote.addEventListener('click', createStudyNote);
+navOpenNote.addEventListener('click', openStudyNote);
 
 switchMemo.addEventListener('click', function() {
-    if (studyAreaBody.style.display === 'none') {
-        studyAreaBody.style.display = 'block';
-    } else {
-        studyAreaBody.style.display = 'none';
-    }
+    studyMemoPanel.style.display = 'block';
+    studyPropertiesPanel.style.display = 'none';
 });
 
 switchHighlight.addEventListener('click', function() {
@@ -177,6 +181,11 @@ switchHighlight.addEventListener('click', function() {
         endContainerPath: 'p[3]',
         endOffset: 6
     });
+});
+
+switchProperties.addEventListener('click', function() {
+    studyMemoPanel.style.display = 'none';
+    studyPropertiesPanel.style.display = 'block';
 });
 
 studyAreaBody.style.display = 'none';

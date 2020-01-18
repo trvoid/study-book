@@ -19,17 +19,24 @@
         <div id='study-area' class='w3-border w3-light-grey'>
             <div id='study-area-header'>
                 <div class='w3-bar' style='height:100%;'>
-                    <a href='javascript:void(0);' id='nav-open' class='w3-bar-item w3-button fa fa-folder-open' title='Open a study book' style='font-size:19px;margin-top:2px'></a>
+                    <a href='#' id='nav-new-note' class='w3-bar-item w3-button fa fa-file-o' title='Create a study book' style='font-size:19px;margin-top:2px'></a>
+                    <a href='#' id='nav-open-note' class='w3-bar-item w3-button fa fa-folder-open' title='Open a study book' style='font-size:19px;margin-top:2px'></a>
                 </div>
             </div>
             <div id='study-area-body'>
-                <textarea id='study-memo' style='width:100%;height:100%;'></textarea>
+                <div id='study-memo-panel'>
+                    <textarea id='study-memo' style='width:100%;height:100%;'></textarea>
+                </div>
+                <div id='study-properties-panel'>
+                    <div id='study-properties' class='w3-yellow' style='width:100%;height:100%;'></div>
+                </div>
             </div>
             <div id='study-area-footer' class='w3-bar w3-border-top'>
                 <a href='#' id='switch-memo' class='w3-bar-item w3-button' title='Memo'><i class='fa fa-edit'></i></a>
                 <a href='#' id='switch-highlight' class='w3-bar-item w3-button' title='Highlight'><i class='fa fa-asterisk'></i></a>
                 <a href='#' id='switch-typing' class='w3-bar-item w3-button' title='Typing'><i class='fa fa-keyboard-o'></i></a>
                 <a href='#' id='switch-quiz' class='w3-bar-item w3-button' title='Quiz'><i class='fa fa-trophy'></i></a>
+                <a href='#' id='switch-properties' class='w3-bar-item w3-button' title='Properties'><i class='fa fa-gear'></i></a>
             </div>
         </div>
         <script>
