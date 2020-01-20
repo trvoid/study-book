@@ -65,6 +65,11 @@ function loadStudyNote(filePath) {
         let title = obj.title;
         let link = obj.material.link;
         let study = obj.study;
+
+        document.getElementById('name-value').innerHTML = studyNoteFilePath;
+        document.getElementById('url-value').innerHTML = link;
+        document.getElementById('title-value').innerHTML = title;
+
         view.loadURL(link);
         if (study.memo !== undefined) {
             studyMde.value(study.memo.content);
