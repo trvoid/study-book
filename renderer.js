@@ -52,6 +52,37 @@ function createStudyNote(event) {
     document.getElementById('new-note-dialog').style.display = 'block';
 }
 
+function loadStudyNote(filePath) {
+    studyNoteFilePath = filePath;
+
+    jsonfile.readFile(studyNoteFilePath, function(err, obj) {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        studyNoteObj = obj;
+        let title = obj.title;
+        let link = obj.material.link;
+        let study = obj.study;
+        view.loadURL(link);
+        if (study.memo !== undefined) {
+            studyMde.value(study.memo.content);
+
+            studyMde.codemirror.on("change", function() {
+                if (studyNoteSaveTimer !== undefined) {
+                    clearTimeout(studyNoteSaveTimer);
+                }
+            	studyNoteSaveTimer = setTimeout(saveStudyNote, 5000);
+            });
+        }
+    });
+
+    studyArea.style.height = '440px';
+    studyAreaBody.style.display = 'block';
+    studyAreaFooter.style.display = 'block';
+}
+
 function openStudyNote(event) {
     let options = {
         title : 'Open a study note',
@@ -80,33 +111,7 @@ function openStudyNote(event) {
     studyMde.codemirror.on('change', function() {});
     studyMde.value('');
 
-    studyNoteFilePath = filePaths[0];
-    jsonfile.readFile(studyNoteFilePath, function(err, obj) {
-        if (err) {
-            console.error(err);
-            return;
-        }
-
-        studyNoteObj = obj;
-        let title = obj.title;
-        let link = obj.material.link;
-        let study = obj.study;
-        view.loadURL(link);
-        if (study.memo !== undefined) {
-            studyMde.value(study.memo.content);
-
-            studyMde.codemirror.on("change", function() {
-                if (studyNoteSaveTimer !== undefined) {
-                    clearTimeout(studyNoteSaveTimer);
-                }
-            	studyNoteSaveTimer = setTimeout(saveStudyNote, 5000);
-            });
-        }
-    });
-
-    studyArea.style.height = '440px';
-    studyAreaBody.style.display = 'block';
-    studyAreaFooter.style.display = 'block';
+    loadStudyNote(filePaths[0]);
 }
 
 function saveStudyNote() {
@@ -212,6 +217,17 @@ createNoteButton.addEventListener('click', function() {
 
     document.getElementById('new-note-dialog').style.display = 'none';
 
+    studyAreaBody.style.display = 'none';
+    studyAreaFooter.style.display = 'none';
+
+    if (studyNoteSaveTimer !== undefined) {
+        clearTimeout(studyNoteSaveTimer);
+        studyNoteSaveTimer = undefined;
+        saveStudyNote();
+    }
+    studyMde.codemirror.on('change', function() {});
+    studyMde.value('');
+
     var newNoteObj = {
         'title': title,
         'material': {
@@ -230,6 +246,8 @@ createNoteButton.addEventListener('click', function() {
     studyNoteFilePath = name + '.snote';
     studyNoteObj = newNoteObj;
     saveStudyNote();
+
+    loadStudyNote(name + '.snote');
 });
 
 studyAreaBody.style.display = 'none';
