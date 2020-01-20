@@ -26,8 +26,10 @@ const mainWindow = remote.getCurrentWindow();
 const materialArea = ById('material-area'),
     navNewNote = ById('nav-new-note'),
     navOpenNote = ById('nav-open-note'),
+    navMinimizeNote = ById('nav-minimize-note'),
     view = ById('view'),
     studyArea = ById('study-area'),
+    studyAreaHeader = ById('study-area-header'),
     studyAreaBody = ById('study-area-body'),
     studyAreaFooter = ById('study-area-footer'),
     studyMemoPanel = ById('study-memo-panel'),
@@ -101,6 +103,7 @@ function openStudyNote(event) {
         }
     });
 
+    studyArea.style.height = '440px';
     studyAreaBody.style.display = 'block';
     studyAreaFooter.style.display = 'block';
 }
@@ -111,6 +114,18 @@ function saveStudyNote() {
     jsonfile.writeFile(studyNoteFilePath, studyNoteObj, options, function(err) {
         if (err) console.error(err);
     });
+}
+
+function minimizeStudyNote(event) {
+    if (studyArea.style.height === '42px') {
+        studyArea.style.height = '440px';
+        studyAreaBody.style.display = 'block';
+        studyAreaFooter.style.display = 'block';
+    } else {
+        studyArea.style.height = '42px';
+        studyAreaBody.style.display = 'none';
+        studyAreaFooter.style.display = 'none';
+    }
 }
 
 function dragElement(elem) {
@@ -165,6 +180,7 @@ view.addEventListener('ipc-message', function(event) {
 
 navNewNote.addEventListener('click', createStudyNote);
 navOpenNote.addEventListener('click', openStudyNote);
+navMinimizeNote.addEventListener('click', minimizeStudyNote);
 
 switchMemo.addEventListener('click', function() {
     studyMemoPanel.style.display = 'block';
