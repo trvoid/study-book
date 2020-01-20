@@ -10,6 +10,8 @@ const path = require('path');
 ////////////////////////////////////////////////////////////////////////////////
 const SNOTE_FILE_EXTENSION = '.snote';
 
+const JSONFILE_OPTIONS = {spaces:2, EOL:'\r\n'};
+
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities                                                                  //
 ////////////////////////////////////////////////////////////////////////////////
@@ -66,7 +68,7 @@ function loadStudyNote(filePath) {
         let link = obj.material.link;
         let study = obj.study;
 
-        document.getElementById('name-value').innerHTML = studyNoteFilePath;
+        document.getElementById('file-value').innerHTML = studyNoteFilePath;
         document.getElementById('url-value').innerHTML = link;
         document.getElementById('title-value').innerHTML = title;
 
@@ -121,8 +123,7 @@ function openStudyNote(event) {
 
 function saveStudyNote() {
     studyNoteObj.study.memo.content = studyMde.value();
-    let options = {spaces:2, EOL:'\r\n'};
-    jsonfile.writeFile(studyNoteFilePath, studyNoteObj, options, function(err) {
+    jsonfile.writeFile(studyNoteFilePath, studyNoteObj, JSONFILE_OPTIONS, function(err) {
         if (err) console.error(err);
     });
 }
@@ -181,7 +182,7 @@ function dragElement(elem) {
 // Main                                                                       //
 ////////////////////////////////////////////////////////////////////////////////
 view.addEventListener('dom-ready', () => {
-    view.openDevTools();
+    //view.openDevTools();
 });
 
 view.addEventListener('ipc-message', function(event) {
@@ -257,5 +258,6 @@ createNoteButton.addEventListener('click', function() {
 
 studyAreaBody.style.display = 'none';
 studyAreaFooter.style.display = 'none';
+studyPropertiesPanel.style.display = 'none';
 
 dragElement(document.getElementById('study-area'));
