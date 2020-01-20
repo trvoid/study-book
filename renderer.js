@@ -38,6 +38,7 @@ const materialArea = ById('material-area'),
     switchMemo = ById('switch-memo'),
     switchHighlight = ById('switch-highlight'),
     switchProperties = ById('switch-properties'),
+    createNoteButton = ById('create-note-button'),
     studyMde = new SimpleMDE({element: studyMemo});
 
 let studyNoteFilePath;
@@ -48,7 +49,7 @@ let studyNoteSaveTimer;
 // Functions                                                                  //
 ////////////////////////////////////////////////////////////////////////////////
 function createStudyNote(event) {
-
+    document.getElementById('new-note-dialog').style.display = 'block';
 }
 
 function openStudyNote(event) {
@@ -202,6 +203,33 @@ switchHighlight.addEventListener('click', function() {
 switchProperties.addEventListener('click', function() {
     studyMemoPanel.style.display = 'none';
     studyPropertiesPanel.style.display = 'block';
+});
+
+createNoteButton.addEventListener('click', function() {
+    var name = document.getElementById('note-name').value;
+    var url = document.getElementById('note-url').value;
+    var title = document.getElementById('note-title').value;
+
+    document.getElementById('new-note-dialog').style.display = 'none';
+
+    var newNoteObj = {
+        'title': title,
+        'material': {
+            'type': 'web',
+            'link': url
+        },
+        'study': {
+            'memo': {
+                'created-when': '',
+                'modified-when': '',
+                'content': ''
+            }
+        }
+    };
+
+    studyNoteFilePath = name + '.snote';
+    studyNoteObj = newNoteObj;
+    saveStudyNote();
 });
 
 studyAreaBody.style.display = 'none';

@@ -40,6 +40,26 @@
                 <a href='#' id='switch-properties' class='w3-bar-item w3-button' title='Properties'><i class='fa fa-gear'></i></a>
             </div>
         </div>
+        <div id='new-note-dialog' class='w3-modal'>
+            <div class='w3-modal-content'>
+                <div class="w3-container w3-teal">
+                    <span onclick="document.getElementById('new-note-dialog').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
+                    <h2>Create a study note</h2>
+                </div>
+                <div class="w3-panel">
+                    <label>Name</label>
+                    <input id='note-name' class="w3-input" type="text">
+                    <label>URL</label>
+                    <input id='note-url' class="w3-input" type="text">
+                    <label>Title</label>
+                    <input id='note-title' class="w3-input" type="text">
+                </div>
+                <div class="w3-panel">
+                    <button onclick="document.getElementById('new-note-dialog').style.display='none'" type="button" class="w3-button w3-large w3-red">Cancel</button>
+                    <button id='create-note-button' type="button" class="w3-button w3-large w3-blue">Create</button>
+                </div>
+            </div>
+        </div>
         <script>
             require('./renderer.js')
         </script>
