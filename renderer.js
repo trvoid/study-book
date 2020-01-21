@@ -296,11 +296,11 @@ createNoteButton.addEventListener('click', function() {
         }
     };
 
-    studyNoteFilePath = name + '.snote';
+    studyNoteFilePath = file;
     studyNoteObj = newNoteObj;
     saveStudyNote();
 
-    loadStudyNote(name + '.snote');
+    loadStudyNote(file);
 });
 
 studyAreaBody.style.display = 'none';
