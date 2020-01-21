@@ -86,6 +86,7 @@ function loadStudyNote(filePath) {
             };
         }
 
+        document.getElementById('file-name').innerHTML = path.basename(studyNoteFilePath, '.snote');
         document.getElementById('file-value').innerHTML = studyNoteFilePath;
         document.getElementById('url-value').innerHTML = link;
         document.getElementById('title-value').innerHTML = title;

@@ -17,7 +17,8 @@
             <webview id='view' src='http://www.google.com/' preload='injector.js' autosize='on'></webview>
         </div>
         <div id='study-area' class='w3-card w3-border w3-light-grey'>
-            <div id='study-area-header'>
+            <div id='study-area-header' class='w3-display-container'>
+                <span id='file-name' class="w3-display-middle"></span>
                 <div class='w3-bar' style='height:100%;'>
                     <a href='#' id='nav-new-note' class='w3-bar-item w3-button fa fa-file-o' title='Create a study note' style='font-size:19px;margin-top:2px'></a>
                     <a href='#' id='nav-open-note' class='w3-bar-item w3-button fa fa-folder-open' title='Open a study note' style='font-size:19px;margin-top:2px'></a>
@@ -33,12 +34,12 @@
                 </div>
                 <div id='study-properties-panel'>
                     <div id='study-properties' class='w3-container' style='width:100%;height:100%;'>
-                        <h4>File</h4>
-                        <p id='file-value' class='w3-margin-left'></p>
-                        <h4>URL</h4>
-                        <p id='url-value' class='w3-margin-left'></p>
-                        <h4>Title</h4>
-                        <p id='title-value' class='w3-margin-left'></p>
+                        <h6>File</h6>
+                        <p id='file-value' class='w3-small w3-margin-left'></p>
+                        <h6>URL</h6>
+                        <p id='url-value' class='w3-small w3-margin-left'></p>
+                        <h6>Title</h6>
+                        <p id='title-value' class='w3-small w3-margin-left'></p>
                     </div>
                 </div>
             </div>
