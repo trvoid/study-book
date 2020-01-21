@@ -35,13 +35,17 @@ const materialArea = ById('material-area'),
     studyAreaBody = ById('study-area-body'),
     studyAreaFooter = ById('study-area-footer'),
     studyMemoPanel = ById('study-memo-panel'),
+    studyQuizPanel = ById('study-quiz-panel'),
     studyPropertiesPanel = ById('study-properties-panel'),
     studyMemo = ById('study-memo'),
+    studyQuiz = ById('study-quiz'),
     switchMemo = ById('switch-memo'),
+    switchQuiz = ById('switch-quiz'),
     switchHighlight = ById('switch-highlight'),
     switchProperties = ById('switch-properties'),
     createNoteButton = ById('create-note-button'),
-    studyMde = new SimpleMDE({element: studyMemo});
+    studyMemoMde = new SimpleMDE({element: studyMemo}),
+    studyQuizMde = new SimpleMDE({element: studyQuiz});
 
 let studyNoteFilePath;
 let studyNoteObj;
@@ -67,6 +71,20 @@ function loadStudyNote(filePath) {
         let title = obj.title;
         let link = obj.material.link;
         let study = obj.study;
+        if (study.memo === undefined) {
+            study.memo = {
+                'created-when': '',
+                'modified-when': '',
+                'content': '',
+            };
+        }
+        if (study.quiz === undefined) {
+            study.quiz = {
+                'created-when': '',
+                'modified-when': '',
+                'content': '',
+            };
+        }
 
         document.getElementById('file-value').innerHTML = studyNoteFilePath;
         document.getElementById('url-value').innerHTML = link;
@@ -74,9 +92,19 @@ function loadStudyNote(filePath) {
 
         view.loadURL(link);
         if (study.memo !== undefined) {
-            studyMde.value(study.memo.content);
+            studyMemoMde.value(study.memo.content);
 
-            studyMde.codemirror.on("change", function() {
+            studyMemoMde.codemirror.on("change", function() {
+                if (studyNoteSaveTimer !== undefined) {
+                    clearTimeout(studyNoteSaveTimer);
+                }
+            	studyNoteSaveTimer = setTimeout(saveStudyNote, 5000);
+            });
+        }
+        if (study.quiz !== undefined) {
+            studyQuizMde.value(study.quiz.content);
+
+            studyQuizMde.codemirror.on("change", function() {
                 if (studyNoteSaveTimer !== undefined) {
                     clearTimeout(studyNoteSaveTimer);
                 }
@@ -115,14 +143,17 @@ function openStudyNote(event) {
         studyNoteSaveTimer = undefined;
         saveStudyNote();
     }
-    studyMde.codemirror.on('change', function() {});
-    studyMde.value('');
+    studyMemoMde.codemirror.on('change', function() {});
+    studyMemoMde.value('');
+    studyQuizMde.codemirror.on('change', function() {});
+    studyQuizMde.value('');
 
     loadStudyNote(filePaths[0]);
 }
 
 function saveStudyNote() {
-    studyNoteObj.study.memo.content = studyMde.value();
+    studyNoteObj.study.memo.content = studyMemoMde.value();
+    studyNoteObj.study.quiz.content = studyQuizMde.value();
     jsonfile.writeFile(studyNoteFilePath, studyNoteObj, JSONFILE_OPTIONS, function(err) {
         if (err) console.error(err);
     });
@@ -196,6 +227,13 @@ navMinimizeNote.addEventListener('click', minimizeStudyNote);
 
 switchMemo.addEventListener('click', function() {
     studyMemoPanel.style.display = 'block';
+    studyQuizPanel.style.display = 'none';
+    studyPropertiesPanel.style.display = 'none';
+});
+
+switchQuiz.addEventListener('click', function() {
+    studyMemoPanel.style.display = 'none';
+    studyQuizPanel.style.display = 'block';
     studyPropertiesPanel.style.display = 'none';
 });
 
@@ -213,11 +251,12 @@ switchHighlight.addEventListener('click', function() {
 
 switchProperties.addEventListener('click', function() {
     studyMemoPanel.style.display = 'none';
+    studyQuizPanel.style.display = 'none';
     studyPropertiesPanel.style.display = 'block';
 });
 
 createNoteButton.addEventListener('click', function() {
-    var name = document.getElementById('note-name').value;
+    var file = document.getElementById('note-file').value;
     var url = document.getElementById('note-url').value;
     var title = document.getElementById('note-title').value;
 
@@ -231,8 +270,10 @@ createNoteButton.addEventListener('click', function() {
         studyNoteSaveTimer = undefined;
         saveStudyNote();
     }
-    studyMde.codemirror.on('change', function() {});
-    studyMde.value('');
+    studyMemoMde.codemirror.on('change', function() {});
+    studyMemoMde.value('');
+    studyQuizMde.codemirror.on('change', function() {});
+    studyQuizMde.value('');
 
     var newNoteObj = {
         'title': title,
@@ -242,6 +283,11 @@ createNoteButton.addEventListener('click', function() {
         },
         'study': {
             'memo': {
+                'created-when': '',
+                'modified-when': '',
+                'content': ''
+            },
+            'quiz': {
                 'created-when': '',
                 'modified-when': '',
                 'content': ''
@@ -258,6 +304,7 @@ createNoteButton.addEventListener('click', function() {
 
 studyAreaBody.style.display = 'none';
 studyAreaFooter.style.display = 'none';
+studyQuizPanel.style.display = 'none';
 studyPropertiesPanel.style.display = 'none';
 
 dragElement(document.getElementById('study-area'));
