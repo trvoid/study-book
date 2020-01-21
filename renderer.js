@@ -44,8 +44,8 @@ const materialArea = ById('material-area'),
     switchHighlight = ById('switch-highlight'),
     switchProperties = ById('switch-properties'),
     createNoteButton = ById('create-note-button'),
-    studyMemoMde = new SimpleMDE({element: studyMemo}),
-    studyQuizMde = new SimpleMDE({element: studyQuiz});
+    studyMemoMde = new SimpleMDE({element: studyMemo, spellChecker: false, status: false}),
+    studyQuizMde = new SimpleMDE({element: studyQuiz, spellChecker: false, status: false});
 
 let studyNoteFilePath;
 let studyNoteObj;
