@@ -226,6 +226,12 @@ view.addEventListener('ipc-message', function(event) {
 navNewNote.addEventListener('click', createStudyNote);
 navOpenNote.addEventListener('click', openStudyNote);
 navMinimizeNote.addEventListener('click', minimizeStudyNote);
+navMinimizeNote.addEventListener('mouseover', function() {
+    studyArea.style.opacity = 0.05;
+});
+navMinimizeNote.addEventListener('mouseout', function() {
+    studyArea.style.opacity = 0.98;
+});
 
 switchMemo.addEventListener('click', function() {
     studyMemoPanel.style.display = 'block';
