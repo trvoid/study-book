@@ -231,12 +231,28 @@ switchMemo.addEventListener('click', function() {
     studyMemoPanel.style.display = 'block';
     studyQuizPanel.style.display = 'none';
     studyPropertiesPanel.style.display = 'none';
+
+    document.getElementById('switch-memo').classList.remove('w3-text-teal');
+    document.getElementById('switch-quiz').classList.remove('w3-text-teal');
+    document.getElementById('switch-highlight').classList.remove('w3-text-teal');
+    document.getElementById('switch-typing').classList.remove('w3-text-teal');
+    document.getElementById('switch-properties').classList.remove('w3-text-teal');
+
+    document.getElementById('switch-memo').classList.add('w3-text-teal');
 });
 
 switchQuiz.addEventListener('click', function() {
     studyMemoPanel.style.display = 'none';
     studyQuizPanel.style.display = 'block';
     studyPropertiesPanel.style.display = 'none';
+
+    document.getElementById('switch-memo').classList.remove('w3-text-teal');
+    document.getElementById('switch-quiz').classList.remove('w3-text-teal');
+    document.getElementById('switch-highlight').classList.remove('w3-text-teal');
+    document.getElementById('switch-typing').classList.remove('w3-text-teal');
+    document.getElementById('switch-properties').classList.remove('w3-text-teal');
+
+    document.getElementById('switch-quiz').classList.add('w3-text-teal');
 });
 
 switchHighlight.addEventListener('click', function() {
@@ -249,12 +265,28 @@ switchHighlight.addEventListener('click', function() {
         endContainerPath: 'p[3]',
         endOffset: 6
     });
+
+    document.getElementById('switch-memo').classList.remove('w3-text-teal');
+    document.getElementById('switch-quiz').classList.remove('w3-text-teal');
+    document.getElementById('switch-highlight').classList.remove('w3-text-teal');
+    document.getElementById('switch-typing').classList.remove('w3-text-teal');
+    document.getElementById('switch-properties').classList.remove('w3-text-teal');
+
+    document.getElementById('switch-highlight').classList.add('w3-text-teal');
 });
 
 switchProperties.addEventListener('click', function() {
     studyMemoPanel.style.display = 'none';
     studyQuizPanel.style.display = 'none';
     studyPropertiesPanel.style.display = 'block';
+
+    document.getElementById('switch-memo').classList.remove('w3-text-teal');
+    document.getElementById('switch-quiz').classList.remove('w3-text-teal');
+    document.getElementById('switch-highlight').classList.remove('w3-text-teal');
+    document.getElementById('switch-typing').classList.remove('w3-text-teal');
+    document.getElementById('switch-properties').classList.remove('w3-text-teal');
+
+    document.getElementById('switch-properties').classList.add('w3-text-teal');
 });
 
 saveAsButton.addEventListener('click', function() {
