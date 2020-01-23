@@ -43,6 +43,7 @@ const materialArea = ById('material-area'),
     switchQuiz = ById('switch-quiz'),
     switchHighlight = ById('switch-highlight'),
     switchProperties = ById('switch-properties'),
+    saveAsButton = ById('save-as-button'),
     createNoteButton = ById('create-note-button'),
     studyMemoMde = new SimpleMDE({element: studyMemo, spellChecker: false, status: false}),
     studyQuizMde = new SimpleMDE({element: studyQuiz, spellChecker: false, status: false});
@@ -254,6 +255,25 @@ switchProperties.addEventListener('click', function() {
     studyMemoPanel.style.display = 'none';
     studyQuizPanel.style.display = 'none';
     studyPropertiesPanel.style.display = 'block';
+});
+
+saveAsButton.addEventListener('click', function() {
+    let options = {
+        title : 'Save a study note',
+        defaultPath : '.',
+        buttonLabel : 'Save',
+        filters : [
+            {name: 'Study notes', extensions: ['snote']}
+        ]
+    };
+
+    let filePath = dialog.showSaveDialogSync(mainWindow, options);
+
+    if (filePath === undefined) {
+        return;
+    }
+
+    document.getElementById('note-file').value = filePath;
 });
 
 createNoteButton.addEventListener('click', function() {

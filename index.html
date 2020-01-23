@@ -12,16 +12,16 @@
 
         <link rel='stylesheet' href='css/main.css'>
     </head>
-    <body class='w3-topbar w3-border-blue'>
+    <body class='w3-topbar w3-border-teal'>
         <div id='material-area' class='w3-grey'>
             <webview id='view' src='http://www.google.com/' preload='injector.js' autosize='on'></webview>
         </div>
         <div id='study-area' class='w3-card w3-border w3-light-grey'>
-            <div id='study-area-header' class='w3-display-container'>
+            <div id='study-area-header' class='w3-display-container w3-teal'>
                 <span id='file-name' class="w3-display-middle"></span>
                 <div class='w3-bar' style='height:100%;'>
                     <a href='#' id='nav-new-note' class='w3-bar-item w3-button fa fa-file-o' title='Create a study note' style='font-size:19px;margin-top:2px'></a>
-                    <a href='#' id='nav-open-note' class='w3-bar-item w3-button fa fa-folder-open' title='Open a study note' style='font-size:19px;margin-top:2px'></a>
+                    <a href='#' id='nav-open-note' class='w3-bar-item w3-button fa fa-folder-open-o' title='Open a study note' style='font-size:19px;margin-top:2px'></a>
                     <a href='#' id='nav-minimize-note' class='w3-bar-item w3-button fa fa-window-minimize' title='Minimize the study note' style='font-size:19px;margin-top:2px'></a>
                 </div>
             </div>
@@ -44,11 +44,11 @@
                 </div>
             </div>
             <div id='study-area-footer' class='w3-bar'>
-                <a href='#' id='switch-memo' class='w3-bar-item w3-button' title='Memo'><i class='fa fa-edit'></i></a>
-                <a href='#' id='switch-quiz' class='w3-bar-item w3-button' title='Quiz'><i class='fa fa-trophy'></i></a>
-                <a href='#' id='switch-highlight' class='w3-bar-item w3-button' title='Highlight'><i class='fa fa-asterisk'></i></a>
-                <a href='#' id='switch-typing' class='w3-bar-item w3-button' title='Typing'><i class='fa fa-keyboard-o'></i></a>
-                <a href='#' id='switch-properties' class='w3-bar-item w3-button' title='Properties'><i class='fa fa-info'></i></a>
+                <button id='switch-memo' class='w3-bar-item w3-button' title='Memo'><i class='fa fa-edit'></i></button>
+                <button id='switch-quiz' class='w3-bar-item w3-button' title='Quiz'><i class='fa fa-trophy'></i></button>
+                <button id='switch-highlight' class='w3-bar-item w3-button' title='Highlight'><i class='fa fa-asterisk'></i></button>
+                <button id='switch-typing' class='w3-bar-item w3-button' title='Typing'><i class='fa fa-keyboard-o'></i></button>
+                <button id='switch-properties' class='w3-bar-item w3-button' title='Properties'><i class='fa fa-info'></i></button>
             </div>
         </div>
         <div id='new-note-dialog' class='w3-modal'>
@@ -57,17 +57,26 @@
                     <span onclick="document.getElementById('new-note-dialog').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
                     <h2>Create a study note</h2>
                 </div>
-                <div class="w3-panel">
+                <div class="w3-container">
                     <label>File</label>
-                    <input id='note-file' class="w3-input" type="text">
+                    <div class='w3-row'>
+                        <div class='w3-col' style='width:90%;'>
+                            <input id='note-file' class="w3-input" type="text">
+                        </div>
+                        <div class='w3-col' style='width:10%;'>
+                            <button id='save-as-button' class='w3-button w3-right' title='Save as...'><i class='fa fa-folder-open-o w3-large'></i></button>
+                        </div>
+                    </div>
                     <label>URL</label>
                     <input id='note-url' class="w3-input" type="text">
                     <label>Title</label>
                     <input id='note-title' class="w3-input" type="text">
                 </div>
-                <div class="w3-panel">
-                    <button onclick="document.getElementById('new-note-dialog').style.display='none'" type="button" class="w3-button w3-large w3-red">Cancel</button>
-                    <button id='create-note-button' type="button" class="w3-button w3-large w3-blue">Create</button>
+                <div class="w3-container w3-padding">
+                    <div class='w3-right'>
+                        <button onclick="document.getElementById('new-note-dialog').style.display='none'" type="button" class="w3-button w3-large w3-red">Cancel</button>
+                        <button id='create-note-button' type="button" class="w3-button w3-large w3-blue">Create</button>
+                    </div>
                 </div>
             </div>
         </div>
