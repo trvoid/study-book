@@ -215,12 +215,21 @@ function dragElement(elem) {
 // Main                                                                       //
 ////////////////////////////////////////////////////////////////////////////////
 view.addEventListener('dom-ready', () => {
-    //view.openDevTools();
+    view.openDevTools();
 });
 
 view.addEventListener('ipc-message', function(event) {
     console.log(event);
-    console.info(event.channel);
+
+    let channelObj = JSON.parse(event.channel);
+    if ('selectionRange' in channelObj && channelObj.selectionRange !== null) {
+        view.send('highlight-on', {
+            id: 'myElementID',
+            text: 'browser',
+            color: 'red',
+            selectionRange: channelObj.selectionRange
+        });
+    }
 });
 
 navNewNote.addEventListener('click', createStudyNote);
@@ -262,15 +271,7 @@ switchQuiz.addEventListener('click', function() {
 });
 
 switchHighlight.addEventListener('click', function() {
-    //view.send('request');
-    view.send('highlight-on', {
-        id: 'myelementID',
-        text: 'browser',
-        startContainerPath: 'p[3]',
-        startOffset: 3,
-        endContainerPath: 'p[3]',
-        endOffset: 6
-    });
+    view.send('get-selection-range');
 
     document.getElementById('switch-memo').classList.remove('w3-text-teal');
     document.getElementById('switch-quiz').classList.remove('w3-text-teal');
@@ -282,6 +283,15 @@ switchHighlight.addEventListener('click', function() {
 });
 
 switchProperties.addEventListener('click', function() {
+    view.send('highlight-on', {
+        id: 'myelementID',
+        text: 'browser',
+        startContainerPath: '//*[@id="main"][1]/div/div/p/text()',
+        startOffset: 6,
+        endContainerPath: '//*[@id="main"][1]/div/div/p/text()',
+        endOffset: 11
+    });
+
     studyMemoPanel.style.display = 'none';
     studyQuizPanel.style.display = 'none';
     studyPropertiesPanel.style.display = 'block';
