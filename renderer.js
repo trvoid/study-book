@@ -4,11 +4,14 @@
 const {remote} = require('electron');
 const jsonfile = require('jsonfile');
 const path = require('path');
+const dateformat = require('dateformat');
+const fs = require('fs');
 
 ////////////////////////////////////////////////////////////////////////////////
 // Constants                                                                  //
 ////////////////////////////////////////////////////////////////////////////////
-const SNOTE_FILE_EXTENSION = '.snote';
+const TNOTE_FILE_BASE_DIR = '.tbook'
+const TNOTE_FILE_EXTENSION = 'tnote';
 
 const JSONFILE_OPTIONS = {spaces:2, EOL:'\r\n'};
 
@@ -43,7 +46,6 @@ const materialArea = ById('material-area'),
     switchQuiz = ById('switch-quiz'),
     switchHighlight = ById('switch-highlight'),
     switchProperties = ById('switch-properties'),
-    saveAsButton = ById('save-as-button'),
     createNoteButton = ById('create-note-button'),
     studyMemoMde = new SimpleMDE({element: studyMemo, spellChecker: false, status: false}),
     studyQuizMde = new SimpleMDE({element: studyQuiz, spellChecker: false, status: false});
@@ -55,6 +57,16 @@ let studyNoteSaveTimer;
 ////////////////////////////////////////////////////////////////////////////////
 // Functions                                                                  //
 ////////////////////////////////////////////////////////////////////////////////
+function getNewStudyNoteFilePath() {
+    let baseDir = `./${TNOTE_FILE_BASE_DIR}`;
+
+    let now = new Date();
+    let monthStr = dateformat(now, 'yyyy-mm');
+    let datetimeStr = dateformat(now, 'yymmdd_hhMMss_l');
+
+    return `${baseDir}/${monthStr}/${datetimeStr}.${TNOTE_FILE_EXTENSION}`;
+}
+
 function createStudyNote(event) {
     document.getElementById('new-note-dialog').style.display = 'block';
 }
@@ -123,10 +135,10 @@ function loadStudyNote(filePath) {
 function openStudyNote(event) {
     let options = {
         title : 'Open a study note',
-        defaultPath : '.',
+        defaultPath : `./${TNOTE_FILE_BASE_DIR}`,
         buttonLabel : 'Open',
         filters : [
-            {name: 'Study notes', extensions: ['snote']}
+            {name: 'Study notes', extensions: [TNOTE_FILE_EXTENSION]}
         ],
         properties: ['openFile']
     };
@@ -156,6 +168,12 @@ function openStudyNote(event) {
 function saveStudyNote() {
     studyNoteObj.study.memo.content = studyMemoMde.value();
     studyNoteObj.study.quiz.content = studyQuizMde.value();
+
+    let fileDir = path.dirname(studyNoteFilePath);
+    if (!fs.existsSync(fileDir)) {
+        fs.mkdirSync(fileDir);
+    }
+
     jsonfile.writeFile(studyNoteFilePath, studyNoteObj, JSONFILE_OPTIONS, function(err) {
         if (err) console.error(err);
     });
@@ -305,27 +323,7 @@ switchProperties.addEventListener('click', function() {
     document.getElementById('switch-properties').classList.add('w3-text-teal');
 });
 
-saveAsButton.addEventListener('click', function() {
-    let options = {
-        title : 'Save a study note',
-        defaultPath : '.',
-        buttonLabel : 'Save',
-        filters : [
-            {name: 'Study notes', extensions: ['snote']}
-        ]
-    };
-
-    let filePath = dialog.showSaveDialogSync(mainWindow, options);
-
-    if (filePath === undefined) {
-        return;
-    }
-
-    document.getElementById('note-file').value = filePath;
-});
-
 createNoteButton.addEventListener('click', function() {
-    var file = document.getElementById('note-file').value;
     var url = document.getElementById('note-url').value;
     var title = document.getElementById('note-title').value;
 
@@ -364,11 +362,13 @@ createNoteButton.addEventListener('click', function() {
         }
     };
 
-    studyNoteFilePath = file;
+    var filePath = getNewStudyNoteFilePath();
+
+    studyNoteFilePath = filePath;
     studyNoteObj = newNoteObj;
     saveStudyNote();
 
-    loadStudyNote(file);
+    loadStudyNote(filePath);
 });
 
 studyAreaBody.style.display = 'none';
