@@ -51,6 +51,34 @@
                 <button id='switch-properties' class='w3-bar-item w3-button' title='Properties'><i class='fa fa-info'></i></button>
             </div>
         </div>
+        <div id="note-explorer" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container w3-teal">
+                    <span onclick="document.getElementById('note-explorer').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
+                    <h2>Note explorer</h2>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col m4">
+                        <ul class="w3-ul w3-hoverable">
+                            <li>2020-02</li>
+                            <li>2020-03</li>
+                        </ul>
+                    </div>
+                    <div class="w3-col m8">
+                        <ul class="w3-ul w3-hoverable">
+                            <li>200301_085640_276.tnote</li>
+                            <li>200301_085640_276.tnote</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <div class='w3-right'>
+                        <button id='open-note-button' type="button" class="w3-button w3-large w3-blue">Open</button>
+                        <button onclick="document.getElementById('note-explorer').style.display='none'" type="button" class="w3-button w3-large w3-red">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id='new-note-dialog' class='w3-modal'>
             <div class='w3-modal-content'>
                 <div class="w3-container w3-teal">
@@ -65,8 +93,8 @@
                 </div>
                 <div class="w3-container w3-padding">
                     <div class='w3-right'>
-                        <button onclick="document.getElementById('new-note-dialog').style.display='none'" type="button" class="w3-button w3-large w3-red">Cancel</button>
                         <button id='create-note-button' type="button" class="w3-button w3-large w3-blue">Create</button>
+                        <button onclick="document.getElementById('new-note-dialog').style.display='none'" type="button" class="w3-button w3-large w3-red">Cancel</button>
                     </div>
                 </div>
             </div>

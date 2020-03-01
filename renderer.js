@@ -67,6 +67,10 @@ function getNewStudyNoteFilePath() {
     return `${baseDir}/${monthStr}/${datetimeStr}.${TNOTE_FILE_EXTENSION}`;
 }
 
+function showNoteExplorer(event) {
+    document.getElementById('note-explorer').style.display = 'block';
+}
+
 function createStudyNote(event) {
     document.getElementById('new-note-dialog').style.display = 'block';
 }
@@ -171,7 +175,7 @@ function saveStudyNote() {
 
     let fileDir = path.dirname(studyNoteFilePath);
     if (!fs.existsSync(fileDir)) {
-        fs.mkdirSync(fileDir);
+        fs.mkdirSync(fileDir, { recursive: true });
     }
 
     jsonfile.writeFile(studyNoteFilePath, studyNoteObj, JSONFILE_OPTIONS, function(err) {
@@ -251,7 +255,8 @@ view.addEventListener('ipc-message', function(event) {
 });
 
 navNewNote.addEventListener('click', createStudyNote);
-navOpenNote.addEventListener('click', openStudyNote);
+//navOpenNote.addEventListener('click', openStudyNote);
+navOpenNote.addEventListener('click', showNoteExplorer);
 navMinimizeNote.addEventListener('click', minimizeStudyNote);
 navMinimizeNote.addEventListener('mouseover', function() {
     studyArea.style.opacity = 0.05;
