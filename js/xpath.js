@@ -48,17 +48,6 @@ var xpath = {
     },
 
     createXPathRangeFromRange: function (range) {
-        'use strict';
-        return {
-            startContainerPath: this._getXPathFromNode(range.startContainer),
-            startOffset: range.startOffset,
-            endContainerPath: this._getXPathFromNode(range.endContainer),
-            endOffset: range.endOffset,
-            collapsed: range.collapsed
-        };
-    },
-
-    createXPathRangeFromRange: function (range) {
         "use strict";
         return {
             startContainerPath: this._getXPathFromNode(range.startContainer),
