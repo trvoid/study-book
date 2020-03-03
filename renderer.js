@@ -68,6 +68,32 @@ function getNewStudyNoteFilePath() {
 }
 
 function showNoteExplorer(event) {
+    let baseDir = `./${TNOTE_FILE_BASE_DIR}`;
+    let root = { name: 'root', children: [] };
+
+    fs.readdirSync(baseDir).forEach(file => {
+        let monthDir = { name: file, children: [] };
+        fs.readdirSync(`${baseDir}/${file}`).forEach(noteFile => {
+            let noteFileObj = { name: noteFile, children: [] };
+            monthDir.children.push(noteFileObj);
+        });
+        root.children.push(monthDir);
+    });
+
+    const tree = require('electron-tree-view')({
+        root,
+        container: document.querySelector('#note-tree'),
+        children: c => c.children,
+        label: c => c.name
+    })
+
+    tree.on('selected', item => {
+        // adding a new children to every selected item
+        item.children.push({ name: 'foo', children: [] })
+        //tree.loop.update({ root })
+        console.log('item selected')
+    })
+
     document.getElementById('note-explorer').style.display = 'block';
 }
 

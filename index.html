@@ -11,6 +11,7 @@
         <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
         <link rel='stylesheet' href='css/main.css'>
+        <link rel='stylesheet' href='css/tree.css'>
     </head>
     <body class='w3-topbar w3-border-teal'>
         <div id='material-area' class='w3-grey'>
@@ -20,8 +21,8 @@
             <div id='study-area-header' class='w3-display-container w3-teal'>
                 <span id='file-name' class="w3-display-middle"></span>
                 <div class='w3-bar' style='height:100%;'>
-                    <a href='#' id='nav-new-note' class='w3-bar-item w3-button fa fa-file-o' title='Create a study note' style='font-size:19px;margin-top:2px'></a>
                     <a href='#' id='nav-open-note' class='w3-bar-item w3-button fa fa-folder-open-o' title='Open a study note' style='font-size:19px;margin-top:2px'></a>
+                    <a href='#' id='nav-new-note' class='w3-bar-item w3-button fa fa-file-o' title='Create a study note' style='font-size:19px;margin-top:2px'></a>
                     <a href='#' id='nav-minimize-note' class='w3-bar-item w3-button fa fa-minus w3-right' title='Minimize the study note' style='font-size:19px;margin-top:2px'></a>
                 </div>
             </div>
@@ -57,25 +58,7 @@
                     <span onclick="document.getElementById('note-explorer').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
                     <h2>Note explorer</h2>
                 </div>
-                <div class="w3-row">
-                    <div class="w3-col m4">
-                        <ul class="w3-ul w3-hoverable">
-                            <li>2020-02</li>
-                            <li>2020-03</li>
-                        </ul>
-                    </div>
-                    <div class="w3-col m8">
-                        <ul class="w3-ul w3-hoverable">
-                            <li>200301_085640_276.tnote</li>
-                            <li>200301_085640_276.tnote</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="w3-container w3-padding">
-                    <div class='w3-right'>
-                        <button id='open-note-button' type="button" class="w3-button w3-large w3-blue">Open</button>
-                        <button onclick="document.getElementById('note-explorer').style.display='none'" type="button" class="w3-button w3-large w3-red">Close</button>
-                    </div>
+                <div id='note-tree' class="w3-container">
                 </div>
             </div>
         </div>

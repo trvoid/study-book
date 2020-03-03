@@ -19,6 +19,7 @@
   "homepage": "https://github.com/trvoid/study-book#readme",
   "dependencies": {
     "dateformat": "^3.0.3",
+    "electron-tree-view": "^1.1.0",
     "jsonfile": "^5.0.0",
     "path": "^0.12.7"
   }
