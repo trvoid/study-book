@@ -22,7 +22,7 @@
                 <span id='file-name' class="w3-display-middle"></span>
                 <div class='w3-bar' style='height:100%;'>
                     <a href='#' id='nav-open-note' class='w3-bar-item w3-button fa fa-folder-open-o' title='Open a study note' style='font-size:19px;margin-top:2px'></a>
-                    <a href='#' id='nav-new-note' class='w3-bar-item w3-button fa fa-file-o' title='Create a study note' style='font-size:19px;margin-top:2px'></a>
+                    <a href='#' id='nav-new-note' class='w3-bar-item w3-button fa fa-plus' title='Create a study note' style='font-size:19px;margin-top:2px'></a>
                     <a href='#' id='nav-minimize-note' class='w3-bar-item w3-button fa fa-minus w3-right' title='Minimize the study note' style='font-size:19px;margin-top:2px'></a>
                 </div>
             </div>
@@ -52,12 +52,14 @@
                 <button id='switch-properties' class='w3-bar-item w3-button' title='Properties'><i class='fa fa-info'></i></button>
             </div>
         </div>
-        <div id="note-explorer" class="w3-modal">
-            <div class="w3-modal-content">
-                <div class="w3-container w3-teal">
-                    <span onclick="document.getElementById('note-explorer').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
-                    <h2>Note explorer</h2>
+        <div id="note-explorer" class="w3-card w3-border w3-sand" style='display: none'>
+            <div id='explorer-header' class='w3-display-container w3-teal'>
+                <span class="w3-display-middle">Note explorer</span>
+                <div class='w3-bar' style='height:100%;'>
+                    <a href='#' onclick="document.getElementById('note-explorer').style.display='none'" class='w3-bar-item w3-button fa fa-remove w3-right' title='Close' style='font-size:19px;margin-top:2px'></a>
                 </div>
+            </div>
+            <div id='explorer-body'>
                 <div id='note-tree' class="w3-container">
                 </div>
             </div>
@@ -83,7 +85,7 @@
             </div>
         </div>
         <script>
-            require('./renderer.js');
+            require('./js/renderer.js');
         </script>
     </body>
 </html>

@@ -68,6 +68,8 @@ function getNewStudyNoteFilePath() {
 }
 
 function showNoteExplorer(event) {
+    ById('note-tree').innerHTML = '';
+
     let baseDir = `./${TNOTE_FILE_BASE_DIR}`;
     let root = { name: 'root', children: [] };
 
@@ -88,10 +90,12 @@ function showNoteExplorer(event) {
     })
 
     tree.on('selected', item => {
-        // adding a new children to every selected item
-        item.children.push({ name: 'foo', children: [] })
-        //tree.loop.update({ root })
-        console.log('item selected')
+        if (!item.name.endsWith(TNOTE_FILE_EXTENSION)) {
+            return;
+        }
+        let fileDir = '2020-03';
+        let filePath = `${TNOTE_FILE_BASE_DIR}/${fileDir}/${item.name}`;
+        openStudyNote(filePath);
     })
 
     document.getElementById('note-explorer').style.display = 'block';
@@ -162,23 +166,7 @@ function loadStudyNote(filePath) {
     studyAreaFooter.style.display = 'block';
 }
 
-function openStudyNote(event) {
-    let options = {
-        title : 'Open a study note',
-        defaultPath : `./${TNOTE_FILE_BASE_DIR}`,
-        buttonLabel : 'Open',
-        filters : [
-            {name: 'Study notes', extensions: [TNOTE_FILE_EXTENSION]}
-        ],
-        properties: ['openFile']
-    };
-
-    let filePaths = dialog.showOpenDialogSync(mainWindow, options);
-
-    if (filePaths === undefined) {
-        return;
-    }
-
+function openStudyNote(filePath) {
     studyAreaBody.style.display = 'none';
     studyAreaFooter.style.display = 'none';
 
@@ -192,7 +180,7 @@ function openStudyNote(event) {
     studyQuizMde.codemirror.on('change', function() {});
     studyQuizMde.value('');
 
-    loadStudyNote(filePaths[0]);
+    loadStudyNote(filePath);
 }
 
 function saveStudyNote() {
@@ -281,14 +269,13 @@ view.addEventListener('ipc-message', function(event) {
 });
 
 navNewNote.addEventListener('click', createStudyNote);
-//navOpenNote.addEventListener('click', openStudyNote);
 navOpenNote.addEventListener('click', showNoteExplorer);
 navMinimizeNote.addEventListener('click', minimizeStudyNote);
 navMinimizeNote.addEventListener('mouseover', function() {
-    studyArea.style.opacity = 0.05;
+    studyArea.style.opacity = 0.10;
 });
 navMinimizeNote.addEventListener('mouseout', function() {
-    studyArea.style.opacity = 0.98;
+    studyArea.style.opacity = 0.96;
 });
 
 switchMemo.addEventListener('click', function() {
