@@ -262,7 +262,7 @@ view.addEventListener('ipc-message', function(event) {
         view.send('highlight-on', {
             id: 'myElementID',
             text: 'browser',
-            color: 'red',
+            color: '#eeeb3b',
             selectionRange: channelObj.selectionRange
         });
     }

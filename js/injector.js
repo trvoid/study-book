@@ -2,7 +2,7 @@
 // Modules                                                                    //
 ////////////////////////////////////////////////////////////////////////////////
 const {ipcRenderer} = require('electron');
-const xpath = require('./js/xpath.js');
+const xpath = require('./xpath.js');
 
 ipcRenderer.on('get-selection-range', function() {
     let returnObj = { selectionRange: null };
