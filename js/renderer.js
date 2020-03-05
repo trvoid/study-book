@@ -30,25 +30,23 @@ const mainWindow = remote.getCurrentWindow();
 
 const materialArea = ById('material-area'),
     navNewNote = ById('nav-new-note'),
-    navOpenNote = ById('nav-open-note'),
+    navHighlight = ById('nav-highlight');
     navMinimizeNote = ById('nav-minimize-note'),
     view = ById('view'),
     studyArea = ById('study-area'),
     studyAreaHeader = ById('study-area-header'),
     studyAreaBody = ById('study-area-body'),
     studyAreaFooter = ById('study-area-footer'),
+    studyExplorerPanel = ById('study-explorer-panel'),
     studyMemoPanel = ById('study-memo-panel'),
-    studyQuizPanel = ById('study-quiz-panel'),
     studyPropertiesPanel = ById('study-properties-panel'),
     studyMemo = ById('study-memo'),
-    studyQuiz = ById('study-quiz'),
+    switchExplorer = ById('switch-explorer'),
     switchMemo = ById('switch-memo'),
-    switchQuiz = ById('switch-quiz'),
     switchHighlight = ById('switch-highlight'),
     switchProperties = ById('switch-properties'),
     createNoteButton = ById('create-note-button'),
-    studyMemoMde = new SimpleMDE({element: studyMemo, spellChecker: false, status: false}),
-    studyQuizMde = new SimpleMDE({element: studyQuiz, spellChecker: false, status: false});
+    studyMemoMde = new SimpleMDE({element: studyMemo, spellChecker: false, status: false});
 
 let studyNoteFilePath;
 let studyNoteObj;
@@ -98,7 +96,15 @@ function showNoteExplorer(event) {
         openStudyNote(filePath);
     })
 
-    document.getElementById('note-explorer').style.display = 'block';
+    studyExplorerPanel.style.display = 'block';
+    studyMemoPanel.style.display = 'none';
+    studyPropertiesPanel.style.display = 'none';
+
+    document.getElementById('switch-explorer').classList.remove('w3-text-teal');
+    document.getElementById('switch-memo').classList.remove('w3-text-teal');
+    document.getElementById('switch-properties').classList.remove('w3-text-teal');
+
+    document.getElementById('switch-explorer').classList.add('w3-text-teal');
 }
 
 function createStudyNote(event) {
@@ -125,13 +131,6 @@ function loadStudyNote(filePath) {
                 'content': '',
             };
         }
-        if (study.quiz === undefined) {
-            study.quiz = {
-                'created-when': '',
-                'modified-when': '',
-                'content': '',
-            };
-        }
 
         document.getElementById('file-name').innerHTML = path.basename(studyNoteFilePath, '.snote');
         document.getElementById('file-value').innerHTML = studyNoteFilePath;
@@ -143,16 +142,6 @@ function loadStudyNote(filePath) {
             studyMemoMde.value(study.memo.content);
 
             studyMemoMde.codemirror.on("change", function() {
-                if (studyNoteSaveTimer !== undefined) {
-                    clearTimeout(studyNoteSaveTimer);
-                }
-            	studyNoteSaveTimer = setTimeout(saveStudyNote, 5000);
-            });
-        }
-        if (study.quiz !== undefined) {
-            studyQuizMde.value(study.quiz.content);
-
-            studyQuizMde.codemirror.on("change", function() {
                 if (studyNoteSaveTimer !== undefined) {
                     clearTimeout(studyNoteSaveTimer);
                 }
@@ -177,15 +166,16 @@ function openStudyNote(filePath) {
     }
     studyMemoMde.codemirror.on('change', function() {});
     studyMemoMde.value('');
-    studyQuizMde.codemirror.on('change', function() {});
-    studyQuizMde.value('');
 
     loadStudyNote(filePath);
 }
 
 function saveStudyNote() {
+    if (studyNoteFilePath === undefined) {
+        return;
+    }
+
     studyNoteObj.study.memo.content = studyMemoMde.value();
-    studyNoteObj.study.quiz.content = studyQuizMde.value();
 
     let fileDir = path.dirname(studyNoteFilePath);
     if (!fs.existsSync(fileDir)) {
@@ -269,7 +259,9 @@ view.addEventListener('ipc-message', function(event) {
 });
 
 navNewNote.addEventListener('click', createStudyNote);
-navOpenNote.addEventListener('click', showNoteExplorer);
+navHighlight.addEventListener('click', function() {
+    view.send('get-selection-range');
+});
 navMinimizeNote.addEventListener('click', minimizeStudyNote);
 navMinimizeNote.addEventListener('mouseover', function() {
     studyArea.style.opacity = 0.10;
@@ -278,64 +270,27 @@ navMinimizeNote.addEventListener('mouseout', function() {
     studyArea.style.opacity = 0.96;
 });
 
+switchExplorer.addEventListener('click', showNoteExplorer);
+
 switchMemo.addEventListener('click', function() {
+    studyExplorerPanel.style.display = 'none';
     studyMemoPanel.style.display = 'block';
-    studyQuizPanel.style.display = 'none';
     studyPropertiesPanel.style.display = 'none';
 
+    document.getElementById('switch-explorer').classList.remove('w3-text-teal');
     document.getElementById('switch-memo').classList.remove('w3-text-teal');
-    document.getElementById('switch-quiz').classList.remove('w3-text-teal');
-    document.getElementById('switch-highlight').classList.remove('w3-text-teal');
-    document.getElementById('switch-typing').classList.remove('w3-text-teal');
     document.getElementById('switch-properties').classList.remove('w3-text-teal');
 
     document.getElementById('switch-memo').classList.add('w3-text-teal');
 });
 
-switchQuiz.addEventListener('click', function() {
-    studyMemoPanel.style.display = 'none';
-    studyQuizPanel.style.display = 'block';
-    studyPropertiesPanel.style.display = 'none';
-
-    document.getElementById('switch-memo').classList.remove('w3-text-teal');
-    document.getElementById('switch-quiz').classList.remove('w3-text-teal');
-    document.getElementById('switch-highlight').classList.remove('w3-text-teal');
-    document.getElementById('switch-typing').classList.remove('w3-text-teal');
-    document.getElementById('switch-properties').classList.remove('w3-text-teal');
-
-    document.getElementById('switch-quiz').classList.add('w3-text-teal');
-});
-
-switchHighlight.addEventListener('click', function() {
-    view.send('get-selection-range');
-
-    document.getElementById('switch-memo').classList.remove('w3-text-teal');
-    document.getElementById('switch-quiz').classList.remove('w3-text-teal');
-    document.getElementById('switch-highlight').classList.remove('w3-text-teal');
-    document.getElementById('switch-typing').classList.remove('w3-text-teal');
-    document.getElementById('switch-properties').classList.remove('w3-text-teal');
-
-    document.getElementById('switch-highlight').classList.add('w3-text-teal');
-});
-
 switchProperties.addEventListener('click', function() {
-    view.send('highlight-on', {
-        id: 'myelementID',
-        text: 'browser',
-        startContainerPath: '//*[@id="main"][1]/div/div/p/text()',
-        startOffset: 6,
-        endContainerPath: '//*[@id="main"][1]/div/div/p/text()',
-        endOffset: 11
-    });
-
+    studyExplorerPanel.style.display = 'none';
     studyMemoPanel.style.display = 'none';
-    studyQuizPanel.style.display = 'none';
     studyPropertiesPanel.style.display = 'block';
 
+    document.getElementById('switch-explorer').classList.remove('w3-text-teal');
     document.getElementById('switch-memo').classList.remove('w3-text-teal');
-    document.getElementById('switch-quiz').classList.remove('w3-text-teal');
-    document.getElementById('switch-highlight').classList.remove('w3-text-teal');
-    document.getElementById('switch-typing').classList.remove('w3-text-teal');
     document.getElementById('switch-properties').classList.remove('w3-text-teal');
 
     document.getElementById('switch-properties').classList.add('w3-text-teal');
@@ -357,8 +312,6 @@ createNoteButton.addEventListener('click', function() {
     }
     studyMemoMde.codemirror.on('change', function() {});
     studyMemoMde.value('');
-    studyQuizMde.codemirror.on('change', function() {});
-    studyQuizMde.value('');
 
     var newNoteObj = {
         'title': title,
@@ -368,11 +321,6 @@ createNoteButton.addEventListener('click', function() {
         },
         'study': {
             'memo': {
-                'created-when': '',
-                'modified-when': '',
-                'content': ''
-            },
-            'quiz': {
                 'created-when': '',
                 'modified-when': '',
                 'content': ''
@@ -389,9 +337,8 @@ createNoteButton.addEventListener('click', function() {
     loadStudyNote(filePath);
 });
 
-studyAreaBody.style.display = 'none';
-studyAreaFooter.style.display = 'none';
-studyQuizPanel.style.display = 'none';
-studyPropertiesPanel.style.display = 'none';
+//studyAreaBody.style.display = 'none';
+//studyAreaFooter.style.display = 'none';
+//studyPropertiesPanel.style.display = 'none';
 
 dragElement(document.getElementById('study-area'));

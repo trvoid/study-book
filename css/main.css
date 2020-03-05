@@ -46,26 +46,3 @@
 .CodeMirror, .CodeMirror-scroll {
     min-height:284px;
 }
-
-#note-explorer {
-    position:absolute;
-    bottom:50px;
-    left:50px;
-    width:250px;
-    height:440px;
-    opacity:0.98;
-}
-
-#explorer-header {
-    height:42px;
-    padding:1px;
-    cursor:move;
-    z-index:10;
-    color:#fff;
-}
-
-#explorer-body {
-    width:100%;
-    height:398px;
-    overflow:auto;
-}
