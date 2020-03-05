@@ -182,9 +182,7 @@ function saveStudyNote() {
         fs.mkdirSync(fileDir, { recursive: true });
     }
 
-    jsonfile.writeFile(studyNoteFilePath, studyNoteObj, JSONFILE_OPTIONS, function(err) {
-        if (err) console.error(err);
-    });
+    jsonfile.writeFileSync(studyNoteFilePath, studyNoteObj, JSONFILE_OPTIONS);
 }
 
 function minimizeStudyNote(event) {
