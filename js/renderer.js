@@ -111,6 +111,15 @@ function createStudyNote(event) {
     document.getElementById('new-note-dialog').style.display = 'block';
 }
 
+function setHighlight(highlight) {
+    view.send('highlight-on', {
+        id: 'myElementID',
+        text: 'browser',
+        color: '#eeeb3b',
+        selectionRange: highlight.selectionRange
+    });
+}
+
 function loadStudyNote(filePath) {
     studyNoteFilePath = filePath;
 
@@ -128,8 +137,11 @@ function loadStudyNote(filePath) {
             study.memo = {
                 'created-when': '',
                 'modified-when': '',
-                'content': '',
+                'content': 'Put your memo here.',
             };
+        }
+        if (study.highlights === undefined) {
+            study.highlights = [];
         }
 
         document.getElementById('file-name').innerHTML = path.basename(studyNoteFilePath, '.snote');
@@ -239,7 +251,11 @@ function dragElement(elem) {
 // Main                                                                       //
 ////////////////////////////////////////////////////////////////////////////////
 view.addEventListener('dom-ready', () => {
-    view.openDevTools();
+    //view.openDevTools();
+
+    if (studyNoteObj !== undefined) {
+        studyNoteObj.study.highlights.forEach(setHighlight);
+    }
 });
 
 view.addEventListener('ipc-message', function(event) {
@@ -253,6 +269,17 @@ view.addEventListener('ipc-message', function(event) {
             color: '#eeeb3b',
             selectionRange: channelObj.selectionRange
         });
+
+        let highlight = {
+            'created-when': dateformat(new Date(), 'yyyy-mm-dd hh:MM:ss'),
+            selectionRange: channelObj.selectionRange
+        };
+        if (studyNoteObj.highlights === undefined) {
+            studyNoteObj.study.highlights = [];
+        }
+        studyNoteObj.study.highlights.push(highlight);
+
+        saveStudyNote();
     }
 });
 
