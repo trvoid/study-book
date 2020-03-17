@@ -15,6 +15,10 @@ const TNOTE_FILE_EXTENSION = 'tnote';
 
 const JSONFILE_OPTIONS = {spaces:2, EOL:'\r\n'};
 
+const NOTE_EXPLORER_PANEL = 1;
+const NOTE_MEMO_PANEL = 2;
+const NOTE_INFO_PANEL = 3;
+
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities                                                                  //
 ////////////////////////////////////////////////////////////////////////////////
@@ -39,12 +43,12 @@ const materialArea = ById('material-area'),
     studyAreaFooter = ById('study-area-footer'),
     studyExplorerPanel = ById('study-explorer-panel'),
     studyMemoPanel = ById('study-memo-panel'),
-    studyPropertiesPanel = ById('study-properties-panel'),
+    studyInfoPanel = ById('study-info-panel'),
     studyMemo = ById('study-memo'),
     switchExplorer = ById('switch-explorer'),
     switchMemo = ById('switch-memo'),
     switchHighlight = ById('switch-highlight'),
-    switchProperties = ById('switch-properties'),
+    switchInfo = ById('switch-info'),
     createNoteButton = ById('create-note-button'),
     studyMemoMde = new SimpleMDE({element: studyMemo, spellChecker: false, status: false});
 
@@ -65,7 +69,7 @@ function getNewStudyNoteFilePath() {
     return `${baseDir}/${monthStr}/${datetimeStr}.${TNOTE_FILE_EXTENSION}`;
 }
 
-function showNoteExplorer(event) {
+function showNoteExplorer() {
     ById('note-tree').innerHTML = '';
 
     let baseDir = `./${TNOTE_FILE_BASE_DIR}`;
@@ -94,17 +98,7 @@ function showNoteExplorer(event) {
         let fileDir = '2020-03';
         let filePath = `${TNOTE_FILE_BASE_DIR}/${fileDir}/${item.name}`;
         openStudyNote(filePath);
-    })
-
-    studyExplorerPanel.style.display = 'block';
-    studyMemoPanel.style.display = 'none';
-    studyPropertiesPanel.style.display = 'none';
-
-    document.getElementById('switch-explorer').classList.remove('w3-text-teal');
-    document.getElementById('switch-memo').classList.remove('w3-text-teal');
-    document.getElementById('switch-properties').classList.remove('w3-text-teal');
-
-    document.getElementById('switch-explorer').classList.add('w3-text-teal');
+    });
 }
 
 function createStudyNote(event) {
@@ -247,6 +241,33 @@ function dragElement(elem) {
     }
 }
 
+function switchTo(panel) {
+    studyExplorerPanel.style.display = 'none';
+    studyMemoPanel.style.display = 'none';
+    studyInfoPanel.style.display = 'none';
+
+    document.getElementById('switch-explorer').classList.remove('w3-text-teal');
+    document.getElementById('switch-memo').classList.remove('w3-text-teal');
+    document.getElementById('switch-info').classList.remove('w3-text-teal');
+
+    switch (panel) {
+        case NOTE_EXPLORER_PANEL:
+            studyExplorerPanel.style.display = 'block';
+            document.getElementById('switch-explorer').classList.add('w3-text-teal');
+            break;
+        case NOTE_MEMO_PANEL:
+            studyMemoPanel.style.display = 'block';
+            document.getElementById('switch-memo').classList.add('w3-text-teal');
+            break;
+        case NOTE_INFO_PANEL:
+            studyInfoPanel.style.display = 'block';
+            document.getElementById('switch-info').classList.add('w3-text-teal');
+            break;
+        default:
+            break;
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Main                                                                       //
 ////////////////////////////////////////////////////////////////////////////////
@@ -288,37 +309,17 @@ navHighlight.addEventListener('click', function() {
     view.send('get-selection-range');
 });
 navMinimizeNote.addEventListener('click', minimizeStudyNote);
-navMinimizeNote.addEventListener('mouseover', function() {
-    studyArea.style.opacity = 0.10;
-});
-navMinimizeNote.addEventListener('mouseout', function() {
-    studyArea.style.opacity = 0.96;
-});
 
-switchExplorer.addEventListener('click', showNoteExplorer);
+switchExplorer.addEventListener('click', function() {
+    switchTo(NOTE_EXPLORER_PANEL);
+});
 
 switchMemo.addEventListener('click', function() {
-    studyExplorerPanel.style.display = 'none';
-    studyMemoPanel.style.display = 'block';
-    studyPropertiesPanel.style.display = 'none';
-
-    document.getElementById('switch-explorer').classList.remove('w3-text-teal');
-    document.getElementById('switch-memo').classList.remove('w3-text-teal');
-    document.getElementById('switch-properties').classList.remove('w3-text-teal');
-
-    document.getElementById('switch-memo').classList.add('w3-text-teal');
+    switchTo(NOTE_MEMO_PANEL);
 });
 
-switchProperties.addEventListener('click', function() {
-    studyExplorerPanel.style.display = 'none';
-    studyMemoPanel.style.display = 'none';
-    studyPropertiesPanel.style.display = 'block';
-
-    document.getElementById('switch-explorer').classList.remove('w3-text-teal');
-    document.getElementById('switch-memo').classList.remove('w3-text-teal');
-    document.getElementById('switch-properties').classList.remove('w3-text-teal');
-
-    document.getElementById('switch-properties').classList.add('w3-text-teal');
+switchInfo.addEventListener('click', function() {
+    switchTo(NOTE_INFO_PANEL);
 });
 
 createNoteButton.addEventListener('click', function() {
@@ -362,8 +363,7 @@ createNoteButton.addEventListener('click', function() {
     loadStudyNote(filePath);
 });
 
-//studyAreaBody.style.display = 'none';
-//studyAreaFooter.style.display = 'none';
-//studyPropertiesPanel.style.display = 'none';
-
 dragElement(document.getElementById('study-area'));
+
+showNoteExplorer();
+switchTo(NOTE_EXPLORER_PANEL);
