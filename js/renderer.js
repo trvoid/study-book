@@ -63,10 +63,11 @@ function getNewStudyNoteFilePath() {
     let baseDir = `./${TNOTE_FILE_BASE_DIR}`;
 
     let now = new Date();
-    let monthStr = dateformat(now, 'yyyy-mm');
+    let yearStr = dateformat(now, 'yyyy');
+    let monthStr = dateformat(now, 'mm');
     let datetimeStr = dateformat(now, 'yymmdd_hhMMss_l');
 
-    return `${baseDir}/${monthStr}/${datetimeStr}.${TNOTE_FILE_EXTENSION}`;
+    return `${baseDir}/${yearStr}/${monthStr}/${datetimeStr}.${TNOTE_FILE_EXTENSION}`;
 }
 
 function showNoteExplorer() {
@@ -75,13 +76,17 @@ function showNoteExplorer() {
     let baseDir = `./${TNOTE_FILE_BASE_DIR}`;
     let root = { name: 'root', children: [] };
 
-    fs.readdirSync(baseDir).forEach(file => {
-        let monthDir = { name: file, children: [] };
-        fs.readdirSync(`${baseDir}/${file}`).forEach(noteFile => {
-            let noteFileObj = { name: noteFile, children: [] };
-            monthDir.children.push(noteFileObj);
+    fs.readdirSync(baseDir).forEach(year => {
+        let yearDir = { name: year, children: [] };
+        fs.readdirSync(`${baseDir}/${year}`).forEach(month => {
+            let monthDir = { name: month, children: [] };
+            fs.readdirSync(`${baseDir}/${year}/${month}`).forEach(noteFile => {
+                let noteFileObj = { name: noteFile, children: [], path: `${year}/${month}/${noteFile}` };
+                monthDir.children.push(noteFileObj);
+            });
+            yearDir.children.push(monthDir);
         });
-        root.children.push(monthDir);
+        root.children.push(yearDir);
     });
 
     const tree = require('electron-tree-view')({
@@ -95,8 +100,7 @@ function showNoteExplorer() {
         if (!item.name.endsWith(TNOTE_FILE_EXTENSION)) {
             return;
         }
-        let fileDir = '2020-03';
-        let filePath = `${TNOTE_FILE_BASE_DIR}/${fileDir}/${item.name}`;
+        let filePath = `${TNOTE_FILE_BASE_DIR}/${item.path}`;
         openStudyNote(filePath);
     });
 }
